@@ -12,7 +12,8 @@ namespace CustomHeaderMiddleware.Controllers
     [ApiController]
     public class ProfileController : BaseController
     {
-        private string PREFIX = "Profile::";
+        private string PREFIX = "urn:profile:";
+        private string C_PREFIX = "urn:profiles";
         public ProfileController(ISerializer serializer, IOptions<RedisConfiguration> config) : base(serializer, config)
         {
         }
@@ -21,15 +22,9 @@ namespace CustomHeaderMiddleware.Controllers
         public ActionResult<IEnumerable<Profile>> Get()
         {
             //var bundleId = HttpContext.Request.Headers["BundleId"];
-            var keys = CacheClient.SearchKeys(PREFIX + "*");
-            var profiles = new List<Profile>();
-
-            foreach(string key in keys)
-            {
-                profiles.Add(Get<Profile>(key));
-            }
-
-            return Ok(new ApiResponse<IEnumerable<Profile>>() { Result = profiles });
+            var response = Get<IEnumerable<Profile>>(C_PREFIX);
+            if (response == null) return NotFound();
+            return Ok(new ApiResponse<IEnumerable<Profile>>() { Result = response, Entity = "Profiles" });
         }
 
         [HttpGet("{id}")]
@@ -37,7 +32,7 @@ namespace CustomHeaderMiddleware.Controllers
         {
             var response = Get<Profile>(PREFIX + id);
             if (response == null) return NotFound();
-            return Ok(new ApiResponse<Profile>() { Result = response } );
+            return Ok(new ApiResponse<Profile>() { Result = response, Entity = "Profile" } );
         }
 
         [HttpPost]
@@ -45,8 +40,26 @@ namespace CustomHeaderMiddleware.Controllers
         {
             profile.Id = DateTime.UtcNow.Ticks.ToString();
             var key = PREFIX + profile.Id;
-            bool added = Add(key, profile, DateTimeOffset.Now.AddMinutes(10));
-            return Ok(new ApiResponse<string>() { Result = profile.Id });
+            bool added = Add(key, profile);
+
+            SaveSortedProfileCollection();
+
+            return Ok(new ApiResponse<string>() { Result = profile.Id, Entity = "Profile" });
+        }
+
+        private bool SaveSortedProfileCollection()
+        {
+            var ids = CacheClient.SearchKeys(PREFIX + "*");
+            var profiles = new List<Profile>();
+
+            foreach (string id in ids)
+            {
+                profiles.Add(Get<Profile>(id));
+            }
+
+            profiles.Sort();
+            var key = C_PREFIX;
+            return Add(key, profiles);
         }
 
     }

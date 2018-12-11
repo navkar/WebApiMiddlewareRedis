@@ -58,6 +58,7 @@ namespace CustomHeaderMiddleware
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseMiddleware<ParseHeadersMiddleware>();
             app.UseHttpsRedirection();
             app.UseMvc();

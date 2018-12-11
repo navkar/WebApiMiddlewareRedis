@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomHeaderMiddleware", "CustomHeaderMiddleware\CustomHeaderMiddleware.csproj", "{4A83F093-8911-4064-8559-DE68724A6E6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomHeaderMiddleware", "CustomHeaderMiddleware\CustomHeaderMiddleware.csproj", "{4A83F093-8911-4064-8559-DE68724A6E6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddlewareTest2", "MiddlewareTest2\MiddlewareTest2.csproj", "{87B85E2C-9B31-44E0-8A5A-A26AF28DF0FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4A83F093-8911-4064-8559-DE68724A6E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A83F093-8911-4064-8559-DE68724A6E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A83F093-8911-4064-8559-DE68724A6E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B85E2C-9B31-44E0-8A5A-A26AF28DF0FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B85E2C-9B31-44E0-8A5A-A26AF28DF0FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B85E2C-9B31-44E0-8A5A-A26AF28DF0FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B85E2C-9B31-44E0-8A5A-A26AF28DF0FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
